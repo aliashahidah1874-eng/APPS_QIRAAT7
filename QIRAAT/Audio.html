@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصوتيات - تلاوات القراءات</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #e2ece9; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Saiz phone (390px x 844px) */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background: #f4f7f6; 
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0,0,0,.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            flex-shrink: 0;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            direction: rtl; /* Pengepala mengikut susunan Arab */
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 0; /* Butang kembali di sebelah kanan untuk RTL */
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .stop-btn {
+            background: #e11d48;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            direction: rtl;
+        }
+
+        .stop-btn:hover {
+            background: #be123c;
+        }
+
+        /* ================= GRID CONTAINER SKROL ================= */
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 15px;
+            margin-bottom: 75px; 
+            direction: rtl; /* Grid kandungan disusun dari kanan ke kiri */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .grid-container::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* ================= KAD REKAAN PUTIH ================= */
+        .card {
+            background: white;
+            color: #333;
+            height: 125px;
+            border-radius: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .card i {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #0f766e;
+            transition: 0.2s;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            font-weight: bold;
+            color: #0f766e;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .card.playing {
+            background: #0f766e;
+        }
+        .card.playing i, .card.playing h3 {
+            color: white;
+        }
+        .card.playing i {
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        /* ================= BOTTOM NAV ================= */
+        .footer-nav {
+            background: #0f766e;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 100;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.1);
+        }
+
+        .footer-nav a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .footer-nav a:hover, .footer-nav a.active {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone">
+
+    <!-- Header Atas -->
+    <div class="header">
+        <div class="header-top">
+            <h2>صوتيات القراءات</h2>
+            <!-- Pautan kembali dengan ikon anak panah ke kanan sesuai untuk mod Arab -->
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <p class="subtitle">لنستمع إلى القراءات معاً</p>
+        <button class="stop-btn" onclick="stopAudio()"><i class="fa-solid fa-circle-stop"></i> إيقاف الصوت</button>
+    </div>
+
+    <!-- Zon Kad Skrol Menegak -->
+    <div class="grid-container">
+        <div class="grid">
+            <div class="card" id="card-1" data-audio="nafi.mp3" onclick="playAudio(1)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام نافع</h3>
+            </div>
+            <div class="card" id="card-2" data-audio="ibnkathir.mp3" onclick="playAudio(2)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام ابن كثير</h3>
+            </div>
+            <div class="card" id="card-3" data-audio="abuamr.mp3" onclick="playAudio(3)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام أبو عمرو</h3>
+            </div>
+            <div class="card" id="card-4" data-audio="ibnamir.mp3" onclick="playAudio(4)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام ابن عامر</h3>
+            </div>
+            <div class="card" id="card-5" data-audio="asim.mp3" onclick="playAudio(5)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام عاصم</h3>
+            </div>
+            <div class="card" id="card-6" data-audio="hamzah.mp3" onclick="playAudio(6)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام حمزة</h3>
+            </div>
+            <div class="card" id="card-7" data-audio="kisai.mp3" onclick="playAudio(7)">
+                <i class="fa-solid fa-volume-high"></i>
+                <h3>الإمام الكسائي</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav Bar Bawah Telefon -->
+    <div class="footer-nav">
+        <a href="index.html"><i class="fa-solid fa-house"></i></a>
+        <a href="Learning.html"><i class="fa-solid fa-book-open"></i></a>
+        <a href="Audio.html" class="active"><i class="fa-solid fa-headphones"></i></a>
+        <a href="Setting.html"><i class="fa-solid fa-user"></i></a>
+    </div>
+
+</div>
+
+<script>
+    let currentAudio = null;
+    let currentCardId = null;
+
+    function playAudio(id) {
+        stopAudio();
+
+        const cardElement = document.getElementById(`card-${id}`);
+        const audioUrl = cardElement.getAttribute('data-audio');
+
+        if (audioUrl) {
+            currentAudio = new Audio(audioUrl);
+            
+            currentAudio.play().then(() => {
+                currentCardId = id;
+                cardElement.classList.add('playing');
+            }).catch(error => {
+                console.error("Autoplay disekat:", error);
+                alert("الرجاء النقر على أي مكان في الشاشة أولاً ثم الضغط على بطاقة الصوت.");
+            });
+
+            currentAudio.onended = function() {
+                stopAudio();
+            };
+            
+            currentAudio.onerror = function() {
+                alert(`خطأ: الملف باسم "${audioUrl}" غير موجود في المجلد أو هناك خطأ في كتابة الاسم.`);
+                stopAudio();
+            };
+        }
+    }
+
+    function stopAudio() {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
+        if (currentCardId) {
+            document.getElementById(`card-${currentCardId}`).classList.remove('playing');
+            currentCardId = null;
+        }
+    }
+</script>
+
+</body>
+</html>

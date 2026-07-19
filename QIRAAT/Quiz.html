@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار قراءات</title>
+    <!-- Guna fail CSS asal untuk rupa elemen nav (jika ada) -->
+    <link rel="stylesheet" href="Homepage.css">
+    <!-- Font Awesome Icons Link -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Integrated CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* PHONE CONTAINER */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            direction: rtl;
+        }
+
+        .header a {
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .header h2 {
+            font-size: 26px;
+            flex-grow: 1;
+            text-align: right;
+            margin-right: 15px;
+        }
+
+        /* QUIZ CONTENT AREA (BOLEH DI-SCROLL JIKA PANJANG) */
+        .quiz-body {
+            flex: 1;
+            padding: 25px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            direction: rtl; /* Papan kuiz bermula dari kanan */
+        }
+        
+        /* Sembunyikan scrollbar untuk paparan kemas */
+        .quiz-body::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        .progress-text {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            direction: rtl;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #0f766e;
+            transition: width 0.3s ease;
+        }
+
+        /* QUESTION CARD */
+        .question-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        .question-text {
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* OPTIONS BUTTONS */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+            direction: rtl;
+        }
+        .option-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 15px;
+            color: #334155;
+            text-align: right; /* Jawapan disusun rapat ke kanan */
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover {
+            border-color: #0f766e;
+            background: #f0fdfa;
+        }
+
+        /* Answer feedback states */
+        .option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+        }
+        .option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c !important;
+        }
+        .option-btn:disabled {
+            pointer-events: none;
+        }
+
+        /* NEXT BUTTON */
+        .next-btn {
+            margin-top: auto;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            border-radius: 25px;
+            background: #0f766e;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none; /* Hidden until user picks an answer */
+            margin-bottom: 10px;
+        }
+
+        /* SCORE SCREEN */
+        .result-screen {
+            display: none;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+            direction: rtl;
+        }
+        .result-icon {
+            font-size: 60px;
+            color: #eab308;
+            margin-bottom: 15px;
+        }
+        .score-big {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0f766e;
+            margin: 10px 0;
+        }
+        .restart-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #15803d, #0f766e);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Navigasi bawah statik di paling bawah */
+        .bottom {
+            flex-shrink: 0;
+            border-bottom-left-radius: 35px;
+            border-bottom-right-radius: 35px;
+        }
+
+        /* 🌙 DARK MODE SUPPORT 🌙 */
+        .phone.dark-theme {
+            background: #1e293b;
+        }
+        .phone.dark-theme .quiz-body {
+            background: #1e293b;
+        }
+        .phone.dark-theme .question-card {
+            background: #334155;
+            border-color: #475569;
+        }
+        .phone.dark-theme .question-text {
+            color: #f1f5f9;
+        }
+        .phone.dark-theme .option-btn {
+            background: #1e293b;
+            border-color: #475569;
+            color: #cbd5e1;
+        }
+        .phone.dark-theme .option-btn:hover {
+            background: #334155;
+        }
+        .phone.dark-theme .progress-bar {
+            background: #334155;
+        }
+        .phone.dark-theme .score-big {
+            color: #34d399;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone" id="phoneContainer">
+
+        <!-- Header -->
+        <div class="header">
+            <h2>اختبار قراءات</h2>
+            <a href="Learning.php">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- MAIN QUIZ AREA -->
+        <div class="quiz-body" id="quizArea">
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span id="questionNumber">السؤال ١/٣</span>
+                    <span id="scoreText">النتيجة: ٠</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="question-card">
+                <p class="question-text" id="questionText">...جارٍ تحميل السؤال</p>
+            </div>
+
+            <!-- Answer Options -->
+            <div class="options-list" id="optionsContainer">
+                <!-- Option buttons generated dynamically via JS -->
+            </div>
+
+            <!-- Next Button -->
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي</button>
+
+        </div>
+
+        <!-- SCORE / RESULT SCREEN -->
+        <div class="result-screen" id="resultArea">
+            <div class="result-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h2>مبارك!</h2>
+            <p>نتيجتك النهائية:</p>
+            <div class="score-big" id="finalScore">٠/٣</div>
+            <p id="resultFeedback">رائع! استمر في تعلم القراءات.</p>
+            <button class="restart-btn" onclick="restartQuiz()">حاول ثانية</button>
+        </div>
+
+        <!-- 🆕 Bottom Navigation -->
+        <nav class="bottom">
+            <a href="index.html">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="Learning.html">
+                <i class="fas fa-book-open"></i>
+            </a>
+            <a href="Audio.html">
+                <i class="fas fa-headphones"></i>
+            </a>
+            <a href="Setting.html">
+                <i class="fas fa-user"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- QUIZ ENGINE INTERACTIVE JAVASCRIPT -->
+    <script>
+        // 1. Translated Quiz Data to Arabic
+        const quizData = [
+            {
+                question: "ما هو المعنى اللغوي لكلمة 'قراءات' في اللغة العربية؟",
+                options: ["جمع قراءة (تلاوات)", "كتابات", "استماعات", "محفوظات"],
+                correct: 0
+            },
+            {
+                question: "كم عدد الأنواع الرئيسية لأقسام القراءات المذكورة في مذكرتك الدراسية؟",
+                options: ["٥ أنواع", "نوعان (صغرى وكبرى)", "٧ أنواع", "١٠ أنواع"],
+                correct: 1
+            },
+            {
+                question: "تشمل الاختلافات في القراءات الأوجه التالية، ما عدا:",
+                options: ["نطق الحروف", "مدود الحروف (الماد)", "الأصول المعتمدة في التلاوة", "تغيير المعنى الأصلي للآية القرآنية"],
+                correct: 3
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // HTML Elements References
+        const questionNumberEl = document.getElementById('questionNumber');
+        const scoreTextEl = document.getElementById('scoreText');
+        const progressFillEl = document.getElementById('progressFill');
+        const questionTextEl = document.getElementById('questionText');
+        const optionsContainerEl = document.getElementById('optionsContainer');
+        const nextBtnEl = document.getElementById('nextBtn');
+        const quizAreaEl = document.getElementById('quizArea');
+        const resultAreaEl = document.getElementById('resultArea');
+        const finalScoreEl = document.getElementById('finalScore');
+
+        // Converter to Arabic Numbers for UI
+        function toArabicDigits(num) {
+            const id = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+            return num.toString().replace(/[0-9]/g, function(w){
+                return id[+w];
+            });
+        }
+
+        // 2. Global Dark Mode LocalStorage Verification Hook
+        window.addEventListener('DOMContentLoaded', () => {
+            const phoneContainer = document.getElementById('phoneContainer');
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                phoneContainer.classList.add('dark-theme');
+            }
+            loadQuestion();
+        });
+
+        // 3. Question Render Handler
+        function loadQuestion() {
+            resetState();
+            let currentQuestion = quizData[currentQuestionIndex];
+            
+            questionNumberEl.innerText = `السؤال ${toArabicDigits(currentQuestionIndex + 1)}/${toArabicDigits(quizData.length)}`;
+            questionTextEl.innerText = currentQuestion.question;
+            
+            // Render current progressive bar width
+            let progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+            progressFillEl.style.width = `${progressPercent}%`;
+
+            // Append dynamic UI response nodes
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add('option-btn');
+                button.addEventListener('click', () => selectAnswer(button, index));
+                optionsContainerEl.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextBtnEl.style.display = 'none';
+            while (optionsContainerEl.firstChild) {
+                optionsContainerEl.removeChild(optionsContainerEl.firstChild);
+            }
+        }
+
+        // 4. Click Verification Handling Logic
+        function selectAnswer(selectedBtn, index) {
+            let correctAnswerIndex = quizData[currentQuestionIndex].correct;
+            const allButtons = optionsContainerEl.querySelectorAll('.option-btn');
+
+            if (index === correctAnswerIndex) {
+                selectedBtn.classList.add('correct');
+                score++;
+                scoreTextEl.innerText = `النتيجة: ${toArabicDigits(score)}`;
+            } else {
+                selectedBtn.classList.add('wrong');
+                allButtons[correctAnswerIndex].classList.add('correct');
+            }
+
+            // Lock interacting triggers on current question pool
+            allButtons.forEach(btn => btn.disabled = true);
+            nextBtnEl.style.display = 'block';
+        }
+
+        // 5. Progression Steps
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // 6. Complete Score Board Display Rendering
+        function showResults() {
+            progressFillEl.style.width = '100%';
+            quizAreaEl.style.display = 'none';
+            resultAreaEl.style.display = 'flex';
+            finalScoreEl.innerText = `${toArabicDigits(score)}/${toArabicDigits(quizData.length)}`;
+        }
+
+        // 7. Loop Routine Refresh Functionality
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreTextEl.innerText = "النتيجة: ٠";
+            resultAreaEl.style.display = 'none';
+            quizAreaEl.style.display = 'flex';
+            loadQuestion();
+        }
+    </script>
+
+</body>
+</html>

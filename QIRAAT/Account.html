@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <!-- Pautan Ikon Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS disatukan terus di sini -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins, sans-serif;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* PHONE CONTAINER */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 30px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header a {
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .header h2 {
+            font-size: 26px;
+        }
+
+        /* CONTENT SECTION */
+        .account-details {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-icon {
+            width: 40px;
+            font-size: 20px;
+            color: #64748b;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        /* ACTION BUTTONS (PENCIL & EYE) */
+        .action-btn {
+            font-size: 16px;
+            color: #0f766e;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 10px;
+        }
+
+        /* SAVE BUTTON */
+        .save-btn {
+            margin: 20px;
+            padding: 15px;
+            width: calc(100% - 40px);
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #15803d, #0f766e);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(15, 118, 110, 0.2);
+        }
+
+        .save-btn:hover {
+            background: #0d6132;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <!-- Header -->
+        <div class="header">
+            <a href="Setting.html">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2>Account</h2>
+        </div>
+
+        <!-- Bahagian Isi Kandungan Nickname & Password -->
+        <div class="account-details">
+
+            <!-- 1. Bahagian Nickname -->
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Nickname</div>
+                    <div class="detail-value" id="nicknameValue">Ahmad Bin Ali</div>
+                </div>
+                <div class="action-btn" onclick="editNickname()">
+                    <i class="fa-solid fa-pencil"></i>
+                </div>
+            </div>
+
+            <!-- 2. Bahagian Password -->
+            <div class="detail-item">
+                <div class="detail-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="detail-content">
+                    <div class="detail-label">Password</div>
+                    <div class="detail-value" id="passwordValue" data-password="rahsia1234">••••••••</div>
+                </div>
+                <div class="action-btn" onclick="togglePasswordVisibility()">
+                    <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                </div>
+                <div class="action-btn" onclick="editPassword()">
+                    <i class="fa-solid fa-pencil"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Butang Simpan -->
+        <button class="save-btn" onclick="saveAccount()">
+            SAVE
+        </button>
+
+    </div>
+
+    <!-- JAVASCRIPT FOR INTERACTION -->
+    <script>
+        // Membaca nickname sedia ada dari localStorage (jika pernah disimpan sebelum ini)
+        window.onload = function() {
+            const savedNickname = localStorage.getItem('userNickname');
+            if (savedNickname) {
+                document.getElementById('nicknameValue').innerText = savedNickname;
+            }
+        }
+
+        // 1. Fungsi Edit Nickname
+        function editNickname() {
+            let currentNickname = document.getElementById('nicknameValue').innerText;
+            let newNickname = prompt("Enter your nickname:", currentNickname);
+            
+            if (newNickname !== null && newNickname.trim() !== "") {
+                document.getElementById('nicknameValue').innerText = newNickname;
+            }
+        }
+
+        // 2. Fungsi Lihat / Sembunyi Password
+        let isPasswordVisible = false;
+        function togglePasswordVisibility() {
+            const passwordElement = document.getElementById('passwordValue');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const realPassword = passwordElement.getAttribute('data-password');
+
+            if (!isPasswordVisible) {
+                passwordElement.innerText = realPassword;
+                eyeIcon.className = "fa-solid fa-eye-slash";
+                isPasswordVisible = true;
+            } else {
+                passwordElement.innerText = "••••••••";
+                eyeIcon.className = "fa-solid fa-eye";
+                isPasswordVisible = false;
+            }
+        }
+
+        // 3. Fungsi Tukar Password Baru
+        function editPassword() {
+            const passwordElement = document.getElementById('passwordValue');
+            let realPassword = passwordElement.getAttribute('data-password');
+            let newPassword = prompt("Enter your new password:", realPassword);
+            
+            if (newPassword !== null && newPassword.trim() !== "") {
+                passwordElement.setAttribute('data-password', newPassword);
+                if (!isPasswordVisible) {
+                    passwordElement.innerText = "••••••••";
+                } else {
+                    passwordElement.innerText = newPassword;
+                }
+            }
+        }
+
+        // 4. Fungsi Butang Simpan (Simpan ke localStorage)
+        function saveAccount() {
+            let finalNickname = document.getElementById('nicknameValue').innerText;
+            localStorage.setItem('userNickname', finalNickname); // 👈 Simpan ke memori browser
+            
+            alert("Your account has been updated!");
+            window.location.href = 'Setting.html'; 
+        }
+    </script>
+
+</body>
+</html>

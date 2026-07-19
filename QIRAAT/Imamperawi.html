@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">سيرة الإمام</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Saiz phone (390px x 844px) */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background: #fff;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0,0,0,.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            direction: rtl; /* Pengepala ikut susunan Arab */
+        }
+
+        .back-btn {
+            color: white;
+            font-size: 26px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 26px;
+            font-weight: bold;
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        /* ================= CONTENT CONTAINER ================= */
+        .content-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 20px 90px 20px;
+            direction: rtl; /* Kandungan utama bermula dari kanan ke kiri */
+        }
+
+        .content-container::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .name {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .name h2 {
+            color: #0f766e;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .name p {
+            margin-top: 10px;
+            color: #555;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .box {
+            background: #f5fffc;
+            padding: 18px 15px;
+            border-radius: 22px;
+            box-shadow: 0 3px 8px rgba(0,0,0,.06);
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+            justify-content: flex-start;
+        }
+
+        .box h4 {
+            color: #0f766e;
+            margin-bottom: 8px;
+            font-size: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .box p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        /* ================= BOTTOM NAV ================= */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #0f766e;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.1);
+        }
+
+        .bottom-nav a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 26px;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .bottom-nav a:hover, .bottom-nav a.active {
+            color: white !important;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone">
+
+    <!-- Header Atas -->
+    <div class="header">
+        <h2>سيرة الإمام</h2>
+        <a href="FlashCardImamPerawi.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <!-- Ruang Kandungan Skrol -->
+    <div class="content-container">
+        <div class="name">
+            <h2 id="imam-nama">...</h2>
+            <p id="imam-nama-penuh">...</p>
+        </div>
+
+        <div class="grid">
+            <div class="box">
+                <h4><i class="fa-solid fa-location-dot" style="color: #e11d48;"></i> مكان الميلاد</h4>
+                <p id="imam-tempat">...</p>
+            </div>
+
+            <div class="box">
+                <h4><i class="fa-solid fa-mosque" style="color: #0284c7;"></i> وفاة</h4>
+                <p id="imam-wafat">...</p>
+            </div>
+
+            <div class="box">
+                <h4><i class="fa-solid fa-star" style="color: #eab308;"></i> امتياز</h4>
+                <p id="imam-keistimewaan">...</p>
+            </div>
+
+            <div class="box">
+                <h4><i class="fa-solid fa-book-open" style="color: #16a34a;"></i> الراوي</h4>
+                <p id="imam-perawi">...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigasi Bawah -->
+    <nav class="bottom-nav">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <a href="FlashCardImamPerawi.html" class="active">
+            <i class="fa-solid fa-book-open"></i>
+        </a>
+        <a href="Audio.html">
+            <i class="fa-solid fa-headphones"></i>
+        </a>
+        <a href="Setting.html">
+            <i class="fa-solid fa-user"></i>
+        </a>
+    </nav>
+
+</div>
+
+<script>
+    // Data senarai Imam
+    const imamData = {
+        "nafi": {
+            "nama": "الإمام نافع",
+            "nama_penuh": "نافع بن عبد الرحمن بن أبي نعيم",
+            "tempat": "المدينة المنورة",
+            "wafat": "١٦٩هـ",
+            "keistimewaan": "إمام قرّاء المدينة، ومن أشهر أئمة القراءات.",
+            "perawi": "- قالون<br>- ورش"
+        },
+        "ibnkathir": {
+            "nama": "الإمام ابن كثير",
+            "nama_penuh": "عبد الله بن كثير المكي",
+            "tempat": "مكة المكرمة",
+            "wafat": "١٢٠هـ",
+            "keistimewaan": "إمام القراءة لأهل مكة.",
+            "perawi": "- البزي<br>- قنبل"
+        },
+        "abuamr": {
+            "nama": "الإمام أبو عمرو",
+            "nama_penuh": "زبان بن العلاء بن عمار البصري",
+            "tempat": "مكة المكرمة (نشأ في البصرة)",
+            "wafat": "١٤٥هـ",
+            "keistimewaan": "اشتهر في علم اللغة العربية والنحو.",
+            "perawi": "- الدوري<br>- السوسي"
+        },
+        "ibnamir": {
+            "nama": "الإمام ابن عامر",
+            "nama_penuh": "عبد الله بن عامر الأيامي اليحصبي",
+            "tempat": "دمشق، سوريا",
+            "wafat": "١١٨هـ",
+            "keistimewaan": "إمام القراءة لأهل الشام.",
+            "perawi": "- هشام<br>- ابن ذكوان"
+        },
+        "asim": {
+            "nama": "الإمام عاصم",
+            "nama_penuh": "عاصم بن أبي عبد الله بن بهدلة الأسدي",
+            "tempat": "الكوفة، العراق",
+            "wafat": "١٢٧هـ",
+            "keistimewaan": "رواية حفص عنه هي قراءة القرآن الأكثر انتشارًا في العالم الإسلامي اليوم.",
+            "perawi": "- حفص<br>- شعبة"
+        },
+        "hamzah": {
+            "nama": "الإمام حمزة",
+            "nama_penuh": "حمزة بن حبيب بن عمارة الزيات",
+            "tempat": "الكوفة، العراق",
+            "wafat": "١٥٦هـ",
+            "keistimewaan": "اشتهر بالدقة في القراءة وعلم القراءات.",
+            "perawi": "- خلف<br>- خلاد"
+        },
+        "kisai": {
+            "nama": "الإمام الكسائي",
+            "nama_penuh": "أبو الحسن علي بن حمزة",
+            "tempat": "الكوفة، العراق",
+            "wafat": "١٨٩هـ",
+            "keistimewaan": "من كبار أئمة علم النحو والقراءات.",
+            "perawi": "- أبو الحارث<br>- الدوري"
+        }
+    };
+
+    // Ambil nilai 'id' daripada URL (contoh: Imamperawi.html?id=abuamr)
+    const urlParams = new URLSearchParams(window.location.search);
+    const imamId = urlParams.get('id');
+
+    // Kemaskini elemen HTML jika ID wujud dalam data
+    if (imamId && imamData[imamId]) {
+        const data = imamData[imamId];
+        document.getElementById('page-title').innerText = data.nama;
+        document.getElementById('imam-nama').innerText = data.nama;
+        document.getElementById('imam-nama-penuh').innerText = data.nama_penuh;
+        document.getElementById('imam-tempat').innerText = data.tempat;
+        document.getElementById('imam-wafat').innerText = data.wafat;
+        document.getElementById('imam-keistimewaan').innerText = data.keistimewaan;
+        document.getElementById('imam-perawi').innerHTML = data.perawi;
+    } else {
+        document.querySelector('.content-container').innerHTML = '<h3 style="text-align:center; margin-top:50px; color:red;">Imam tidak dijumpai.</h3>';
+    }
+</script>
+
+</body>
+</html>

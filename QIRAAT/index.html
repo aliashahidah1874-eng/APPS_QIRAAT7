@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Qiraat</title>
+    <!-- Guna fail CSS asal untuk rupa elemen -->
+    <link rel="stylesheet" href="Homepage.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Integrated & Fixed CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone {
+            width: 390px;
+            height: 844px; /* Ditetapkan tinggi penuh fon */
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .header h2 {
+            font-size: 28px; /* Dibesarkan dari 24px */
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 16px; /* Dibesarkan dari 14px */
+            opacity: 0.9;
+        }
+
+        /* Ruang kandungan tengah yang boleh di-skrol */
+        .scrollable-home {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .scrollable-home::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .banner {
+            margin: 20px;
+            background: linear-gradient(135deg, #15803d, #0f766e);
+            padding: 25px;
+            border-radius: 20px;
+            color: white;
+        }
+
+        .banner h3 {
+            font-size: 22px; /* Dibesarkan dari 18px */
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            font-size: 15px; /* Dibesarkan dari 13px */
+            line-height: 1.4;
+        }
+
+        .banner button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: #15803d;
+            font-weight: bold;
+            font-size: 16px; /* Dibesarkan */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            text-align: center;
+            padding: 22px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card i {
+            font-size: 38px; /* Dibesarkan dari 35px */
+            color: #15803d;
+            margin-bottom: 12px;
+        }
+
+        .card h4 {
+            font-size: 15px; /* Dibesarkan supaya teks Arab panjang muat dan jelas */
+            line-height: 1.3;
+            color: #1f2937;
+        }
+
+        .lesson {
+            margin: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 20px;
+        }
+
+        .bottom {
+            background: #0f766e;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+            flex-shrink: 0;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+
+        .bottom a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 26px; /* Dibesarkan dari 24px */
+            transition: 0.3s;
+        }
+
+        .bottom a.active, .bottom a:hover {
+            transform: scale(1.1);
+            color: white !important;
+        }
+
+        /* 🌙 DARK MODE SUPPORT 🌙 */
+        .phone.dark-theme {
+            background: #1e293b;
+        }
+        .phone.dark-theme .scrollable-home {
+            background: #1e293b;
+        }
+        .phone.dark-theme .card {
+            background: #334155;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+        }
+        .phone.dark-theme .card h4 {
+            color: #f1f5f9;
+        }
+        .phone.dark-theme .card i {
+            color: #4ade80;
+        }
+        .phone.dark-theme .lesson {
+            background: #334155 !important;
+            border-left-color: #4ade80 !important;
+        }
+        .phone.dark-theme .lesson p {
+            color: #cbd5e1 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone" id="phoneContainer">
+
+        <!-- Header (Statik) -->
+        <div class="header">
+            <h2> تعلم القراءات</h2>
+            <p>دعونا نتعلم القراءات معا</p>
+        </div>
+
+        <!-- Kawasan Kandungan Tengah (Boleh Skrol) -->
+        <div class="scrollable-home">
+
+            <!-- Banner -->
+            <div class="banner">
+                <h3>تعلم القراءات بسهولة</h3>
+                <p>اكتشف الأئمة والرواة والقراءات المختلفة</p>
+                <button 
+                    onclick="window.location.href='Learning.html'" 
+                    onmouseover="this.style.backgroundColor='#e2e8f0'" 
+                    onmouseout="this.style.backgroundColor='white'"
+                    style="cursor: pointer; transition: background 0.3s ease;">
+                    ابدأ التعلم
+                </button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="grid">
+                <a href="FlashCardImamPerawi.html" style="text-decoration:none; color:inherit;">
+                    <div class="card">
+                        <i class="fa-solid fa-user-group"></i>
+                        <h4>بطاقات تعليمية عن الإمام والرواة</h4>
+                    </div>
+                </a>
+
+                <div class="card" style="cursor: pointer;" onclick="window.location.href='Quiz.html'">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <h4>لغز</h4>
+                </div>
+            </div>
+
+            <!-- Daily Verse -->
+            <div class="lesson" style="background: #f0fdf4; border-left: 5px solid #15803d; margin-top: 10px;">
+                <h3 style="color: #15803d; font-size: 18px;"><i class="fa-solid fa-star" style="margin-right: 5px;"></i> آية اليوم</h3>
+                <p style="font-size: 22px; font-family: 'Traditional Arabic', serif; text-align: right; margin-top: 10px; font-weight: bold; direction: rtl;">
+                    وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا
+                </p>
+                <p style="font-size: 15px; color: #4b5563; margin-top: 8px; font-style: italic; line-height: 1.5;">
+                    "...وتلو القرآن قراءة موزونة. (سورة المزمل: 4)
+                </p>
+            </div>
+
+            <!-- Explore Popular Qiraat -->
+            <div style="padding: 0 20px; margin-top: 20px; margin-bottom: 10px;">
+                <h3 style="color: #0f766e; font-size: 18px; margin-bottom: 12px;">استكشف القراءات الشائعة</h3>
+                
+                <!-- Kad 1 -->
+                <div style="background: #f9fafb; padding: 15px 18px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer;" onclick="window.location.href='Audio.html'">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #d1fae5; color: #065f46; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px;">1</div>
+                        <div>
+                            <h4 style="font-size: 16px; color: #1f2937;">حفص عن عاصم</h4>
+                            <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">التلاوة الأكثر قراءة على نطاق واسع</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #9ca3af; font-size: 16px;"></i>
+                </div>
+
+                <!-- Kad 2 -->
+                <div style="background: #f9fafb; padding: 15px 18px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer;" onclick="window.location.href='Audio.html'">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #ccfbf1; color: #0369a1; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px;">2</div>
+                        <div>
+                            <h4 style="font-size: 16px; color: #1f2937;">ورش النافع</h4>
+                            <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">تُقرأ بشكل شائع في شمال أفريقيا</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: #9ca3af; font-size: 16px;"></i>
+                </div>
+            </div>
+
+        </div> <!-- Penutup .scrollable-home -->
+
+        <!-- Bottom Navigation (Statik) -->
+        <nav class="bottom">
+            <a href="index.html" class="active">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="Learning.html">
+                <i class="fas fa-book-open"></i>
+            </a>
+            <a href="Audio.html">
+                <i class="fas fa-headphones"></i>
+            </a>
+            <a href="Setting.html">
+                <i class="fas fa-user"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- JAVASCRIPT GLOBAL HOOK -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const phoneContainer = document.getElementById('phoneContainer');
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            
+            if (isDarkMode && phoneContainer) {
+                phoneContainer.classList.add('dark-theme');
+            }
+        });
+    </script>
+
+</body>
+</html>

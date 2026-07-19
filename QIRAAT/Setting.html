@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <!-- Pautan Ikon Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS disatukan terus di sini -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* PHONE */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background: white;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 30px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .header a {
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+        }
+
+        .header h2 {
+            font-size: 30px;
+        }
+
+        /* BAHAGIAN PROFIL WHATSAPP STYLE */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 20px;
+            border-bottom: 8px solid #f1f5f9;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* 🆕 REKA BENTUK AVATAR ICON DEFAULT */
+        .profile-img-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 12px;
+        }
+
+        /* Kotak bulat kelabu kelam ala avatar WhatsApp */
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #0f766e;
+        }
+
+        /* Ikon user di dalam avatar */
+        .avatar-placeholder i {
+            font-size: 50px;
+            color: #94a3b8;
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #0f766e;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .profile-section h3 {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .profile-section p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* MENU */
+        .menu {
+            flex: 1;
+            padding: 0 20px;
+            overflow-y: auto;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: black;
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 18px;
+        }
+
+        .item i {
+            font-size: 22px;
+        }
+
+        /* SWITCH */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: .4s;
+        }
+
+        .slider:before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background: #0f766e;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* LOGOUT */
+        .logout {
+            margin: 20px;
+            padding: 15px;
+            width: calc(100% - 40px);
+
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #15803d, #0f766e);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .logout:hover {
+            background: #0d6132;
+        }
+
+        /* 🌙 CSS KHAS UNTUK DARK MODE 🌙 */
+        .phone.dark-theme {
+            background: #1e293b;
+        }
+
+        .phone.dark-theme .profile-section {
+            border-bottom: 8px solid #0f172a;
+        }
+
+        /* Tukar warna background avatar ketika dark mode */
+        .phone.dark-theme .avatar-placeholder {
+            background: #334155;
+            border-color: #34d399;
+        }
+
+        .phone.dark-theme .avatar-placeholder i {
+            color: #64748b;
+        }
+
+        .phone.dark-theme .profile-section h3 {
+            color: #f1f5f9;
+        }
+
+        .phone.dark-theme .profile-section p {
+            color: #94a3b8;
+        }
+
+        .phone.dark-theme .item {
+            color: #f1f5f9;
+            border-bottom: 1px solid #334155;
+        }
+
+        .phone.dark-theme .item i {
+            color: #34d399;
+        }
+        
+        .phone.dark-theme .edit-avatar-btn {
+            background: #34d399;
+            color: #1e293b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone" id="phoneContainer">
+
+        <!-- Header -->
+        <div class="header">
+            <a href="index.html">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <h2>إعدادات</h2>
+        </div>
+
+        <!-- Bahagian Gambar Profil Atas (Telah Ditukar Ke Avatar) -->
+        <div class="profile-section">
+            <div class="profile-img-container">
+                <!-- 🆕 Menggunakan elemen placeholder ikon menggantikan tag <img> -->
+                <div class="avatar-placeholder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="edit-avatar-btn">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </div>
+            <h3 id="settingProfileName">Ahmad Bin Ali</h3>
+            <p>Slowly but surely ✨</p>
+        </div>
+
+        <!-- Menu Bawah Gambar -->
+        <div class="menu">
+
+            <!-- 1. Account Menu -->
+            <a href="Account.html" class="item">
+                <div class="left">
+                    <i class="fa-regular fa-user"></i>
+                    <span>حساب</span>
+                </div>
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+
+            <!-- 2. Notifications Menu -->
+            <div class="item">
+                <div class="left">
+                    <i class="fa-regular fa-bell"></i>
+                    <span>إشعارات</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notificationToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- 3. Dark Mode Menu -->
+            <div class="item">
+                <div class="left">
+                    <i class="fa-regular fa-moon"></i>
+                    <span>الوضع الداكن</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+        </div>
+
+        <!-- Logout Button -->
+        <button class="logout" onclick="logoutFunction()">
+            تسجيل الخروج
+        </button>
+
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Membaca nickname baharu dari localStorage sebaik sahaja halaman dibuka
+        window.onload = function() {
+            const savedNickname = localStorage.getItem('userNickname');
+            if (savedNickname) {
+                document.getElementById('settingProfileName').innerText = savedNickname;
+            }
+        }
+
+        // 1. Fungsi Klik Suis Notifications
+        const notificationToggle = document.getElementById('notificationToggle');
+        notificationToggle.addEventListener('change', function() {
+            if (this.checked) {
+                console.log("Notification activated");
+            } else {
+                console.log("Notification deactivated");
+            }
+        });
+
+        // 2. Fungsi Klik Suis Dark Mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const phoneContainer = document.getElementById('phoneContainer');
+
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                phoneContainer.classList.add('dark-theme');
+            } else {
+                phoneContainer.classList.remove('dark-theme');
+            }
+        });
+
+        // 3. Fungsi Butang Logout
+        function logoutFunction() {
+            let confirmLogout = confirm("Are you sure want to log out?");
+            if (confirmLogout) {
+                window.location.href = 'index.html'; 
+            }
+        }
+    </script>
+
+</body>
+</html>

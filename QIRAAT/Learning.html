@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Qiraat</title>
+    <!-- Pautan Ikon Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background: #dbe7e4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone {
+            width: 390px;
+            height: 844px;              /* Tinggi statik skrin telefon */
+            background: white;
+            border-radius: 35px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .2);
+            
+            /* Flexbox untuk membahagikan kawasan statik & scroll */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;           
+            position: relative;
+        }
+
+        /* Header Statik di Atas */
+        .header {
+            background: #0f766e;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;             
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            direction: rtl;            /* Susunan dari kanan ke kiri untuk Arab */
+        }
+
+        .header h2 {
+            font-size: 28px;            /* Dibesarkan dari 24px */
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 16px;            /* Dibesarkan dari 14px */
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            color: white; 
+            font-size: 24px;            /* Dibesarkan */
+            text-decoration: none;
+        }
+
+        /* 🌟 KAWASAN TENGAH BOLEH DI-SCROLL 🌟 */
+        .scrollable-content {
+            flex: 1;                    
+            overflow-y: auto;           
+            padding: 22px;
+            padding-bottom: 40px;       
+            direction: rtl;            /* Teks utama dijajarkan ke kanan */
+        }
+
+        /* Sembunyikan scrollbar */
+        .scrollable-content::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        /* Tajuk Utama Bahagian */
+        .section-title {
+            color: #0f766e; 
+            font-size: 24px;            /* Dibesarkan dari 20px */
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-right: 5px solid #0f766e;
+            padding-right: 10px;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 5px;
+        }
+
+        /* Subtajuk */
+        .sub-title {
+            color: #15803d; 
+            margin-top: 15px; 
+            font-size: 19px;            /* Dibesarkan dari 16px */
+            margin-bottom: 5px;
+        }
+
+        /* Perenggan Maksud/Definisi */
+        .desc-text {
+            color: #333; 
+            line-height: 1.6; 
+            font-size: 16px;            /* Dibesarkan dari 13px/14px */
+            text-align: justify;
+        }
+
+        /* Kad Jenis Qiraat (Grid) */
+        .type-grid {
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .type-card {
+            color: white; 
+            padding: 18px 15px; 
+            border-radius: 18px;
+        }
+
+        .type-card h4 {
+            font-size: 18px;            /* Dibesarkan dari 15px */
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .type-card ul {
+            font-size: 14px;            /* Dibesarkan dari 12px */
+            margin-top: 5px;
+            padding-right: 18px;        /* Padding sebelah kanan untuk bullet point Arab */
+            line-height: 1.5;
+        }
+
+        /* Garis Masa Sejarah */
+        .timeline-item {
+            margin-top: 15px;
+            background: #f9f9f9;
+            padding: 18px;
+            border-radius: 15px;
+            border-right: 5px solid #0f766e; /* Tukar ke border kanan untuk mod Arab */
+            border-left: none;
+        }
+
+        .timeline-item h4 {
+            color: #0f766e;
+            font-size: 17px;            /* Dibesarkan dari 15px */
+            font-weight: bold;
+        }
+
+        .timeline-item p {
+            font-size: 15px;            /* Dibesarkan dari 13px */
+            color: #444;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* Senarai Manfaat */
+        .benefit-list {
+            margin-top: 15px;
+            list-style: none;
+        }
+
+        .benefit-list li {
+            font-size: 16px;            /* Dibesarkan dari 14px */
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+
+        .benefit-list i {
+            color: #15803d;
+            font-size: 18px;            /* Ikon dibesarkan */
+        }
+
+        /* Navigasi Bawah Melekat Statik */
+        .bottom {
+            background: #0f766e;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+            border-bottom-left-radius: 35px;
+            border-bottom-right-radius: 35px;
+            flex-shrink: 0;             
+        }
+
+        .bottom a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 26px;            /* Dibesarkan dari 24px */
+            transition: 0.3s;
+        }
+
+        .bottom a:hover, .bottom a.active {
+            transform: scale(1.1);
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="phone" id="phoneContainer">
+
+        <!-- Header (STATIK) -->
+        <div class="header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i> <!-- Tukar anak panah ke kanan sesuai untuk mod Arab -->
+            </a>
+            <div>
+                <h2>📖 تعلم القراءات</h2>
+                <p>دعونا نتعلم القراءات معا</p>
+            </div>
+        </div>
+
+        <!-- Kandungan Utama (BOLEH DI-SCROLL) -->
+        <div class="scrollable-content">
+            
+            <!-- Bahagian 1: Definition of Qira'at -->
+            <h2 class="section-title">📖 تعريف القراءات</h2>
+            
+            <h3 class="sub-title">لغة</h3>
+            <p class="desc-text">مشتقة من الكلمة العربية <strong>"قرأ"</strong> والتي تعني "القراءة" أو "التلاوة".</p>
+            
+            <h3 class="sub-title">مصطلحات</h3>
+            <p class="desc-text">هي الطرق المعترف بها لتلاوة القرآن الكريم، والتي نقلها أئمة القراءات عبر سند صحيح يعود إلى النبي محمد ﷺ. وتشمل هذه الاختلافات نطق الحروف، ومدّ الحركات، وقواعد التلاوة الأخرى المقبولة التي تستوفي شروطًا محددة.</p>
+
+            <!-- Bahagian 2: TYPES OF Qira'at -->
+            <h2 class="section-title">📚 أنواع القراءات</h2>
+            
+            <div class="type-grid">
+                <div class="type-card" style="background: #15803d;">
+                    <h4>صغرى (صغيرة)</h4>
+                    <ul>
+                        <li>أسهل في التعلم</li>
+                        <li>أسس الدراسات</li>
+                        <li>رواه الشاطبية والدرة</li>
+                    </ul>
+                </div>
+                <div class="type-card" style="background: #0f766e;">
+                    <h4>كبرى (رائد)</h4>
+                    <ul>
+                        <li>أكثر تفصيلاً وتعقيداً</li>
+                        <li>دراسة المستوى المتقدم</li>
+                        <li>استنادًا إلى النشر</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bahagian 3: History of the Emergence of Qira'at -->
+            <h2 class="section-title">⏳ تاريخ الظهور</h2>
+            
+            <div class="timeline-item">
+                <h4>عصر النبي محمد ﷺ</h4>
+                <p>أُنزل أول وحي قرآني على النبي ﷺ.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>عصر الصحابة</h4>
+                <p>تم نقل القرآن عن طريق التلقي (التعلم المباشر) والمشافهة (التناقل الشفهي وجهاً لوجه).</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>عهد الخليفة عثمان بن عفان رضي الله عنه</h4>
+                <p>تجميع وتوحيد المصحف العثماني للحفاظ على صحة القرآن الكريم ودفع الاختلاف.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>القرن الثاني - الثالث الهجري</h4>
+                <p>ظهور أئمة القراءات المشهورين وانتشار نقل سلاسل القراءة الصحيحة (السند) على نطاق واسع.</p>
+            </div>
+
+            <div class="timeline-item">
+                <h4>الوقت الحاضر</h4>
+                <p>لا يزال علم القراءات يُدرس ويُدرّس ويُمارس بالتواتر في جميع أنحاء العالم الإسلامي.</p>
+            </div>
+
+            <!-- Bahagian 4: Benefits of Learning Qira'at -->
+            <h2 class="section-title">✨ فوائد التعلم</h2>
+            
+            <ul class="benefit-list">
+                <li><i class="fas fa-check-circle"></i> <span>يحافظ على صحة وضبط اللفظ القرآني.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يعزز فهم التلاوات المتواترة المختلفة.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يعمق فهم معاني واستنباط أحكام القرآن.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يربط المتعلمين بسلسلة النقل الأصيلة (السند).</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يحسن جودة ودقة تلاوة القرآن الكريم.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يُقدّر إعجاز، جمال وبلاغة القرآن الكريم.</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>يعزز المعرفة الإسلامية والتبحر في العلوم شرعية.</span></li>
+            </ul>
+
+        </div>
+
+        <!-- Bottom Navigation (STATIK) -->
+        <nav class="bottom">
+            <a href="index.html">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="Learning.html" class="active">
+                <i class="fas fa-book-open"></i>
+            </a>
+            <a href="Audio.html">
+                <i class="fas fa-headphones"></i>
+            </a>
+            <a href="Setting.html">
+                <i class="fas fa-user"></i>
+            </a>
+        </nav>
+
+    </div>
+
+    <!-- JAVASCRIPT GLOBAL HOOK (Untuk Mod Gelap) -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const phoneContainer = document.getElementById('phoneContainer');
+            const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+            
+            if (isDarkMode && phoneContainer) {
+                phoneContainer.classList.add('dark-theme');
+                // Tambahan fungsi visual jika CSS modul gelap diperlukan secara global
+                document.querySelectorAll('.timeline-item').forEach(el => el.style.background = '#334155');
+                document.querySelectorAll('.desc-text, .timeline-item p, .benefit-list li').forEach(el => el.style.color = '#cbd5e1');
+            }
+        });
+    </script>
+
+</body>
+</html>
